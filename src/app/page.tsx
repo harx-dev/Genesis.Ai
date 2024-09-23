@@ -1,29 +1,17 @@
-"use client";
+"use client"; // Mark as a Client Component
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import ContentSection from "@/components/ContentSection";
 import InputForm from "@/components/Input";
 import Prism from "prismjs";
+import { marked } from "marked";
 import "prismjs/themes/prism-tomorrow.css";
-import "prismjs/components/prism-javascript";
-import "prismjs/components/prism-python";
-import "prismjs/components/prism-css";
-import "prismjs/components/prism-markup";
-import "prismjs/components/prism-json";
-import "prismjs/components/prism-bash";
-import "prismjs/components/prism-java";
 
 export default function Home() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (answer) {
-      Prism.highlightAll();
-    }
-  }, [answer]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,26 +31,9 @@ export default function Home() {
       }
 
       const result = await response.json();
-      const initialresponse = result.response;
-
-      // Regex to capture language and code inside triple backticks
-      const codeRegex = /```(\w+)\n([\s\S]*?)```/g;
-
-      const highlightedCode = initialresponse.replace(
-        codeRegex,
-        (match: string, language: string, code: string) => {
-          const prismLanguage = Prism.languages[language]
-            ? language
-            : "plaintext";
-
-          return `<pre class="p-4 rounded-lg shadow-md text-sm overflow-x-auto whitespace-pre-wrap"><code class="language-${prismLanguage}">${Prism.highlight(
-            code,
-            Prism.languages[prismLanguage],
-            prismLanguage
-          )}</code></pre>`;
-        }
-      );
-      setAnswer(highlightedCode || initialresponse);
+      const markdownContent = result.response;
+      const htmlContent = await marked(markdownContent);
+      setAnswer(htmlContent);
       setQuestion("");
       setLoading(false);
     } catch (error) {
@@ -72,6 +43,10 @@ export default function Home() {
       setQuestion("");
     }
   };
+
+  useEffect(() => {
+    Prism.highlightAll(); // Highlight code blocks
+  }, [answer]);
 
   return (
     <div className="flex flex-col h-screen">
