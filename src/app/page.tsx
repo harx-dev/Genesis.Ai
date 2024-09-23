@@ -62,12 +62,14 @@ export default function Home() {
           )}</code></pre>`;
         }
       );
-
       setAnswer(highlightedCode || initialresponse);
       setQuestion("");
       setLoading(false);
     } catch (error) {
       console.error("Error submitting:", error);
+      setLoading(false);
+      setAnswer("Server Down");
+      setQuestion("");
     }
   };
 
