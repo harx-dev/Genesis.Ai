@@ -3,47 +3,58 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "./mode-toggle";
 import Link from "next/link";
+import SideNav from "./SideNav";
+import { BrainCircuit } from "lucide-react";
 
 const Header = () => {
-  const [isSidenavOpen, setIsSidenavOpen] = useState(false);
+  const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
 
   const toggleSidenav = () => {
-    setIsSidenavOpen(!isSidenavOpen);
+    setSidenavOpen(!sidenavOpen);
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 flex justify-between p-2 dark:bg-black bg-white border-b border-gray-600/60">
+    <header className="fixed top-0 left-0 right-0 z-[1002] flex justify-between p-2 dark:bg-black bg-white border-b border-gray-600/60">
       {/* Side Navigation */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" onClick={toggleSidenav}>
-            <Menu className="h-6 w-6" />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="pr-0">
-          <p className="pt-6">Login</p>
-        </SheetContent>
-      </Sheet>
+      {sidenavOpen && <SideNav toggleSidenav={toggleSidenav} />}
+
+      <Button
+        className="md:hidden"
+        variant="ghost"
+        size="icon"
+        onClick={toggleSidenav}
+      >
+        <Menu className="h-6 w-6" />
+      </Button>
 
       {/* Header Title */}
-      <h1 className="text-xl font-semibold"> Genesis.Ai</h1>
+      <Link href="/" className="flex items-center">
+        <BrainCircuit className="h-6 w-6  text-primary" />
+        <h1 className="text-xl font-semibold">Genesis.Ai</h1>
+      </Link>
+      <nav className="ml-auto lg:flex gap-4 mt-2 mx-2 hidden">
+        <Link
+          className="text-sm font-medium hover:text-gray-400 "
+          href="/textgenerator"
+        >
+          Text Generator
+        </Link>
+        <Link
+          className="text-sm font-medium hover:text-gray-400"
+          href="/imagegenerator"
+        >
+          Image Generator
+        </Link>
+        <Link className="text-sm font-medium hover:text-gray-400" href="/login">
+          Login
+        </Link>
+      </nav>
 
-      <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/textgenerator">
-            Text Generator
-          </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/imagegenerator">
-            Image Generator
-          </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            About
-          </Link>
-        </nav>
-
-      <ModeToggle />
+      <div>
+        <ModeToggle />
+      </div>
     </header>
   );
 };

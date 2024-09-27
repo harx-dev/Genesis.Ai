@@ -29,7 +29,7 @@ export default function Input({
   const isDisabled = question.trim() === "";
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-1 z-10 flex flex-col justify-center items-center dark:bg-background bg-white">
+    <div className="fixed bottom-0 left-0 right-0 z-[1000] p-1 flex flex-col justify-center items-center dark:bg-background bg-white">
       <form
         onSubmit={(e) => {
           if (isDisabled) {
@@ -60,7 +60,7 @@ export default function Input({
         </div>
       </form>
       <p className="text-gray-400 text-[10px] pt-1">
-      Genesis.Ai can make mistakes. Check important info.
+        Genesis.Ai can make mistakes. Check important info.
       </p>
     </div>
   );
