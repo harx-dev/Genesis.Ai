@@ -18,17 +18,17 @@ const KeyFeature = () => {
       >
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">
-            Powerful AI Features
+            Key AI Features
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <Card>
               <CardHeader>
                 <Bot className="h-8 w-8 mb-2 text-primary" />
-                <CardTitle>Intelligent Chatbots</CardTitle>
+                <CardTitle>Intelligent Model</CardTitle>
               </CardHeader>
               <CardContent>
-                Deploy AI-powered chatbots that understand context and provide
-                human-like responses to customer inquiries.
+                Gemini 1.5 Flash powered Generation that understand context and provide
+                human-like responses.
               </CardContent>
             </Card>
             <Card>
