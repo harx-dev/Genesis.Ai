@@ -1,7 +1,6 @@
-"use client"; // Mark as a Client Component
+"use client";
 
 import { useEffect, useState } from "react";
-import Header from "@/components/Header";
 import ContentSection from "@/components/ContentSection";
 import InputForm from "@/components/Input";
 import Prism from "prismjs";
@@ -50,8 +49,6 @@ export default function TextGenerator() {
 
   return (
     <div className="flex flex-col h-screen">
-      <Header />
-
       <ContentSection answer={answer} loading={loading} />
 
       <InputForm
