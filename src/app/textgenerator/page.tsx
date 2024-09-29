@@ -11,9 +11,11 @@ export default function TextGenerator() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [initial, setInitial] = useState(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setInitial(false);
     setLoading(true);
 
     try {
@@ -34,12 +36,12 @@ export default function TextGenerator() {
       const htmlContent = await marked(markdownContent);
       setAnswer(htmlContent);
       setQuestion("");
-      setLoading(false);
     } catch (error) {
       console.error("Error submitting:", error);
-      setLoading(false);
       setAnswer("Server Down");
       setQuestion("");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,7 +51,7 @@ export default function TextGenerator() {
 
   return (
     <div className="flex flex-col h-screen">
-      <ContentSection answer={answer} loading={loading} />
+      <ContentSection answer={answer} loading={loading} initial={initial} />
 
       <InputForm
         question={question}
