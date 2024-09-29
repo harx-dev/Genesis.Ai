@@ -56,13 +56,11 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full pt-14 h-full flex justify-start items-center flex-col p-4">
+    <div className="w-full p-3 min-h-dvh h-full flex justify-start items-center pt-[72px] flex-col">
       <div className="w-full p-3">
-        <p className="text-center">
-          Generate Image
-        </p>
+        <p className="text-center">Generate Image</p>
       </div>
-      <div className="flex w-full gap-3 h-full md:flex-row flex-col-reverse">
+      <div className="flex w-full gap-3 lg:h-[calc(100dvh-200px)] md:flex-row flex-col-reverse">
         <div className="__form flex-[2] h-full gap-2 flex justify-center items-start flex-col pt-20">
           <p className="text-center w-full lg:text-left text-sm">
             Type you prompt below to create any Image!
@@ -89,14 +87,12 @@ export default function Page() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">
-                  Generate
-                </Button>
+                <Button type="submit">Generate</Button>
               </form>
             </Form>
           </div>
         </div>
-        <div className="__output min-h-[300px] h-[300px] flex-[1] dark:bg-white/5 bg-black/5 rounded-lg items-center justify-center overflow-hidden">
+        <div className="__output min-h-[300px] lg:min-h-full lg:h-full flex-[1] min-w-[300px] dark:bg-white/5 bg-black/5 rounded-lg items-center justify-center overflow-hidden">
           {outputImg ? (
             <Image
               alt="output"
