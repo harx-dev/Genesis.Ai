@@ -17,7 +17,7 @@ export default function TextGenerator() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api/text", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

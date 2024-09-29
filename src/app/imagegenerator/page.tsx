@@ -24,7 +24,7 @@ const formSchema = z.object({
 
 export default function Page() {
   const [outputImg, setOutputImg] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   const { toast } = useToast();
 
@@ -37,7 +37,7 @@ export default function Page() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setLoading(true);
+      // setLoading(true);
       const response = await fetch("/api/image", {
         method: "POST",
         body: JSON.stringify(values),
@@ -51,7 +51,7 @@ export default function Page() {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   }
 
@@ -89,7 +89,7 @@ export default function Page() {
                     </FormItem>
                   )}
                 />
-                <Button loading={loading} type="submit">
+                <Button type="submit">
                   Generate
                 </Button>
               </form>
