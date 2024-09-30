@@ -2,17 +2,17 @@
 
 import Loading from "./Loader";
 
-interface ContentSectionProps {
+interface TextContentSectionProps {
   answer: string;
   loading: boolean;
   initial: boolean;
 }
 
-export default function ContentSection({
+export default function TextContent({
   answer,
   loading,
   initial,
-}: ContentSectionProps) {
+}: TextContentSectionProps) {
   return (
     <div className="p-4 pt-16 w-full mx-auto overflow-x-auto pb-16">
       {initial && !loading && (
@@ -20,7 +20,9 @@ export default function ContentSection({
           <h1 className="text-2xl font-semibold pt-20">
             Welcome to the Text Generator!
           </h1>
-          <p className="mt-2 text-sm">Enter your prompt below to generate Code/Text.</p>
+          <p className="mt-2 text-sm">
+            Enter your prompt below to generate Code/Text.
+          </p>
         </div>
       )}
 

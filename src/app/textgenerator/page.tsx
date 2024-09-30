@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ContentSection from "@/components/ContentSection";
-import InputForm from "@/components/Input";
+import TextContent from "@/components/TextContent";
+import TextInput from "@/components/TextInput";
 import Prism from "prismjs";
 import { marked } from "marked";
 import "prismjs/themes/prism-tomorrow.css";
@@ -51,9 +51,9 @@ export default function TextGenerator() {
 
   return (
     <div className="flex flex-col h-screen">
-      <ContentSection answer={answer} loading={loading} initial={initial} />
+      <TextContent answer={answer} loading={loading} initial={initial} />
 
-      <InputForm
+      <TextInput
         question={question}
         setQuestion={setQuestion}
         handleSubmit={handleSubmit}
