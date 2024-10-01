@@ -10,7 +10,7 @@ interface InputFormProps {
   handleSubmit: (e: React.FormEvent) => void;
 }
 
-export default function Input({
+export default function TextInput({
   question,
   setQuestion,
   handleSubmit,
@@ -51,7 +51,9 @@ export default function Input({
           />
           <button
             type="submit"
-            className={`absolute right-3 bottom-2 transition-colors ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`absolute right-3 bottom-2 transition-colors ${
+              isDisabled ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             aria-label="Send message"
             disabled={isDisabled} // Disable the button if input is empty
           >

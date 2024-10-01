@@ -1,24 +1,35 @@
-"use client"; // Mark as a Client Component
+"use client";
 
 import { useEffect, useState } from "react";
-import Header from "@/components/Header";
-import ContentSection from "@/components/ContentSection";
-import InputForm from "@/components/Input";
+import TextContent from "@/components/TextContent";
+import TextInput from "@/components/TextInput";
 import Prism from "prismjs";
 import { marked } from "marked";
 import "prismjs/themes/prism-tomorrow.css";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function TextGenerator() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [initial, setInitial] = useState(true);
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setInitial(false);
     setLoading(true);
 
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api/text", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,12 +46,12 @@ export default function TextGenerator() {
       const htmlContent = await marked(markdownContent);
       setAnswer(htmlContent);
       setQuestion("");
-      setLoading(false);
     } catch (error) {
       console.error("Error submitting:", error);
-      setLoading(false);
       setAnswer("Server Down");
       setQuestion("");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,11 +61,9 @@ export default function TextGenerator() {
 
   return (
     <div className="flex flex-col h-screen">
-      <Header />
+      <TextContent answer={answer} loading={loading} initial={initial} />
 
-      <ContentSection answer={answer} loading={loading} />
-
-      <InputForm
+      <TextInput
         question={question}
         setQuestion={setQuestion}
         handleSubmit={handleSubmit}
