@@ -6,12 +6,22 @@ import TextInput from "@/components/TextInput";
 import Prism from "prismjs";
 import { marked } from "marked";
 import "prismjs/themes/prism-tomorrow.css";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function TextGenerator() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [initial, setInitial] = useState(true);
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
