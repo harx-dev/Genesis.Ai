@@ -27,7 +27,7 @@ const Hero = () => {
                 transition={{ duration: 0.35, delay: 0 }}
                 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
               >
-                Simplify Task with AI-Powered Image and Code Generator
+                Simplify Task with AI-Powered Image and Text/Code Generator
               </motion.h1>
               <motion.p
                 initial={{

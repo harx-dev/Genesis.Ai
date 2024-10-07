@@ -1,13 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Bot,
-  BrainCircuit,
-  MessageSquare,
-  BarChart,
-  Zap,
-  Shield,
-} from "lucide-react";
+import { Bot, Zap, Shield } from "lucide-react";
 
 const KeyFeature = () => {
   return (
@@ -27,38 +20,18 @@ const KeyFeature = () => {
                 <CardTitle>Intelligent Model</CardTitle>
               </CardHeader>
               <CardContent>
-                Gemini 1.5 Flash powered Generation that understand context and provide
-                human-like responses.
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <MessageSquare className="h-8 w-8 mb-2 text-primary" />
-                <CardTitle>Natural Language Processing</CardTitle>
-              </CardHeader>
-              <CardContent>
-                Analyze and extract insights from text data, including sentiment
-                analysis and entity recognition.
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <BarChart className="h-8 w-8 mb-2 text-primary" />
-                <CardTitle>Predictive Analytics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                Leverage machine learning models to forecast trends and make
-                data-driven business decisions.
+                Gemini 1.5 Flash powered Ai Code Generation that understand
+                context and provide human-like responses.
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
                 <Zap className="h-8 w-8 mb-2 text-primary" />
-                <CardTitle>Automated Workflows</CardTitle>
+                <CardTitle>Image Processing</CardTitle>
               </CardHeader>
               <CardContent>
-                Streamline business processes with AI-powered automation,
-                reducing manual tasks and improving efficiency.
+                Uses Pollination an open-source LLMs,to genrate high quality
+                image.
               </CardContent>
             </Card>
             <Card>
@@ -67,18 +40,7 @@ const KeyFeature = () => {
                 <CardTitle>Enhanced Security</CardTitle>
               </CardHeader>
               <CardContent>
-                Implement AI-driven security measures to detect and prevent
-                potential threats to your business.
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <BrainCircuit className="h-8 w-8 mb-2 text-primary" />
-                <CardTitle>Continuous Learning</CardTitle>
-              </CardHeader>
-              <CardContent>
-                Our AI models continuously learn and improve from your data,
-                providing increasingly accurate insights over time.
+                Secure Login Before Generating any text/image for tracing.
               </CardContent>
             </Card>
           </div>
