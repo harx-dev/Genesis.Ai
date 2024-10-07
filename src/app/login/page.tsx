@@ -3,6 +3,7 @@
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
   const { data: session } = useSession();
@@ -20,12 +21,12 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      <h1 className="text-3xl font-bold mb-6">Login</h1>
+      <h1 className="text-3xl font-bold mb-10">Welcome To Genesis.Ai</h1>
       <button
         onClick={loginWithGoogle}
-        className="px-4 py-2 bg-blue-600 text-white rounded"
+        className="p-2 rounded-lg border flex gap-"
       >
-        Sign in with Google
+        <FcGoogle size={24} /> Sign in with Google
       </button>
     </div>
   );

@@ -7,9 +7,12 @@ import { ModeToggle } from "./mode-toggle";
 import Link from "next/link";
 import SideNav from "./SideNav";
 import { BrainCircuit } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
+
+  const { status } = useSession();
 
   const toggleSidenav = () => {
     setSidenavOpen(!sidenavOpen);
@@ -47,9 +50,20 @@ const Header = () => {
         >
           Image Generator
         </Link>
-        <Link className="text-sm font-medium hover:text-gray-400" href="/login">
-          Login
-        </Link>
+        {status === "authenticated" ? (
+          <Button className="h-6" onClick={() => signOut()}>
+            Logout
+          </Button>
+        ) : (
+          <Button className="h-6">
+            <Link
+              className="text-sm font-medium hover:text-gray-400"
+              href="/login"
+            >
+              Login
+            </Link>
+          </Button>
+        )}
       </nav>
 
       <div>

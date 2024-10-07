@@ -1,13 +1,17 @@
+"use client";
+
 import React from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 interface SideNavProps {
   toggleSidenav: () => void;
 }
 
 const SideNav: React.FC<SideNavProps> = ({ toggleSidenav }) => {
+  const { status } = useSession();
   return (
     <div className="fixed left-0 top-0 w-[70%] h-full z-[1001] border-r dark:bg-black bg-white ease-in-out duration-500 overflow-y-auto">
       <div className="flex flex-row-reverse p-1">
@@ -31,13 +35,21 @@ const SideNav: React.FC<SideNavProps> = ({ toggleSidenav }) => {
         >
           Image Generator
         </Link>
-        <Link
-          className="text-sm font-medium hover:text-gray-400"
-          href="/login"
-          onClick={toggleSidenav}
-        >
-          Login
-        </Link>
+        {status === "authenticated" ? (
+          <Button className="h-6" onClick={() => signOut()}>
+            Logout
+          </Button>
+        ) : (
+          <Button className="h-6">
+            <Link
+              className="text-sm font-medium hover:text-gray-400"
+              href="/login"
+              onClick={toggleSidenav}
+            >
+              Login
+            </Link>
+          </Button>
+        )}
       </nav>
     </div>
   );
