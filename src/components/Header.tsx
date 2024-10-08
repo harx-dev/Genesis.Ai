@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-[1002] flex justify-between p-2 dark:bg-black bg-white border-b border-gray-600/60">
       {/* Side Navigation */}
-      {sidenavOpen && <SideNav toggleSidenav={toggleSidenav} />}
+      <SideNav toggleSidenav={toggleSidenav} isOpen={sidenavOpen} />
 
       <Button
         className="md:hidden"

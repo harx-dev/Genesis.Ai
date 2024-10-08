@@ -8,12 +8,18 @@ import { signOut, useSession } from "next-auth/react";
 
 interface SideNavProps {
   toggleSidenav: () => void;
+  isOpen: boolean; // Add this prop to track if the sidenav is open
 }
 
-const SideNav: React.FC<SideNavProps> = ({ toggleSidenav }) => {
+const SideNav: React.FC<SideNavProps> = ({ toggleSidenav, isOpen }) => {
   const { status } = useSession();
+
   return (
-    <div className="fixed left-0 top-0 w-[70%] h-full z-[1001] border-r dark:bg-black bg-white ease-in-out duration-500 overflow-y-auto">
+    <div
+      className={`fixed left-0 top-0 w-[70%] h-full z-[1001] border-r dark:bg-black bg-white ease-in-out duration-500 overflow-y-auto transform ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
       <div className="flex flex-row-reverse p-1">
         <Button variant="ghost" size="icon" onClick={toggleSidenav}>
           <Cross2Icon className="h-6 w-6" />

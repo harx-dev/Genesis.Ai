@@ -30,7 +30,7 @@ const KeyFeature = () => {
                 <CardTitle>Image Processing</CardTitle>
               </CardHeader>
               <CardContent>
-                Uses Pollination an open-source LLMs,to genrate high quality
+                Uses Pollination an open-source LLMs,to generate high quality
                 image.
               </CardContent>
             </Card>
