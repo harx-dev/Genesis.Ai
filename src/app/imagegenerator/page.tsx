@@ -12,6 +12,7 @@ export default function Page() {
   const [outputImg, setOutputImg] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [initialPage, setInitialPage] = useState(true);
+  const [serverError, setServerError] = useState("");
   const { status } = useSession();
   const router = useRouter();
 
@@ -41,9 +42,11 @@ export default function Page() {
       if (response.status === 200) {
         setOutputImg(data.url);
       } else {
+        setServerError("Failed to generate image try again");
         toast({ variant: "destructive", description: data.error });
       }
     } catch (error) {
+      setServerError("An error occurred while fetching the image");
       console.error(error);
     } finally {
       setLoading(false);
@@ -57,6 +60,7 @@ export default function Page() {
         outputImg={outputImg || ""}
         loading={loading}
         initialPage={initialPage}
+        serverError={serverError}
       />
     </div>
   );
