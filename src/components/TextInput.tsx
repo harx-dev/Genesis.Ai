@@ -1,67 +1,55 @@
 "use client";
-
-import { useRef, useEffect } from "react";
-import { Textarea } from "@/components/ui/textarea";
+import React from "react";
 import { Send } from "lucide-react";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
-interface InputFormProps {
+interface TextInputProps {
   question: string;
   setQuestion: (value: string) => void;
-  handleSubmit: (e: React.FormEvent) => void;
+  onSubmit: (e: React.FormEvent) => void;
+  loading: boolean;
+  handleStop: () => void;
 }
 
 export default function TextInput({
   question,
   setQuestion,
-  handleSubmit,
-}: InputFormProps) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // Resize textarea dynamically based on content
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "inherit";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [question]);
-
-  // Check if the input is empty
+  onSubmit,
+  loading,
+  handleStop,
+}: TextInputProps) {
   const isDisabled = question.trim() === "";
-
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[1000] p-1 flex flex-col justify-center items-center dark:bg-background bg-white">
-      <form
-        onSubmit={(e) => {
-          if (isDisabled) {
-            e.preventDefault(); // Prevent form submission if input is empty
-            return; // Exit the function if the input is empty
-          }
-          handleSubmit(e); // Call the submit handler if input is not empty
-        }}
-        className="relative w-full px-5"
-      >
-        <div className="relative">
-          <Textarea
-            ref={textareaRef}
+    <div className="fixed bottom-0 z-50 w-full bg-white dark:bg-background p-1 justify-center items-center">
+      <form onSubmit={onSubmit} className="m-2">
+        <div className="flex space-x-2">
+          <Input
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Type your Prompt..."
-            className="pr-10 min-h-[40px] max-h-[300px] resize-none rounded-xl border-2"
-            rows={1}
+            placeholder="Enter your prompt here..."
+            className="flex-grow p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={loading}
           />
-          <button
+          <Button
             type="submit"
-            className={`absolute right-3 bottom-2 transition-colors ${
+            className={`transition-colors ${
               isDisabled ? "opacity-50 cursor-not-allowed" : ""
             }`}
             aria-label="Send message"
-            disabled={isDisabled} // Disable the button if input is empty
+            disabled={isDisabled}
           >
-            <Send className="h-5 w-5" />
-          </button>
+            {loading ? (
+              <button className="" onClick={handleStop}>
+                Stop
+              </button>
+            ) : (
+              <Send className="h-5 w-5" />
+            )}
+          </Button>
         </div>
       </form>
-      <p className="text-gray-400 text-[10px] pt-1">
+      <p className="text-gray-400 text-[10px] flex justify-center items-center">
         Genesis.Ai can make mistakes. Check important info.
       </p>
     </div>
