@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import TextContent from "@/components/TextContent";
@@ -20,7 +20,7 @@ export default function TextGenerator() {
     }
   }, [status, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Abort any existing request
@@ -62,11 +62,12 @@ export default function TextGenerator() {
         const chunk = decoder.decode(value, { stream: true });
 
         // Update answer immediately
-        setAnswer(prevAnswer => prevAnswer + chunk);
+        setAnswer((prevAnswer) => prevAnswer + chunk);
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      if (error.name === 'AbortError') {
-        console.log('Request was aborted');
+      if (error.name === "AbortError") {
+        console.log("Request was aborted");
       } else {
         console.error("Error submitting:", error);
         setAnswer("An error occurred while generating response");
@@ -76,7 +77,7 @@ export default function TextGenerator() {
       setQuestion("");
       abortControllerRef.current = null;
     }
-  };
+  }, [question]);
 
   const handleStop = () => {
     if (abortControllerRef.current) {
@@ -86,20 +87,21 @@ export default function TextGenerator() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="w-full h-screen flex flex-col">
       <h1 className="text-3xl font-bold mb-6 text-center">Text Generator</h1>
-     
-      <TextContent 
-        answer={answer} 
-        loading={loading} 
-        initial={initial} 
-      />
-       <TextInput 
-        question={question} 
-        setQuestion={setQuestion} 
-        onSubmit={handleSubmit} 
-        loading={loading} 
-      />
+
+      <div className="flex-1 overflow-y-auto max-w-full">
+        <TextContent answer={answer} loading={loading} initial={initial} />
+      </div>
+
+      <div className="mt-auto">
+        <TextInput
+          question={question}
+          setQuestion={setQuestion}
+          onSubmit={handleSubmit}
+          loading={loading}
+        />
+      </div>
     </div>
   );
 }
