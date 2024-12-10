@@ -1,5 +1,4 @@
-// pages/api/generate.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function POST(req: NextRequest) {
@@ -8,58 +7,59 @@ export async function POST(req: NextRequest) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return NextResponse.json(
-      { message: "API key is missing" },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({ message: "API key is missing" }),
+      { 
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      }
     );
   }
 
   if (!question) {
-    return NextResponse.json(
-      { message: "Question is required" },
-      { status: 400 }
+    return new Response(
+      JSON.stringify({ message: "Question is required" }),
+      { 
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      }
     );
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-
   const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
   });
 
-  const generationConfig = {
-    temperature: 1,
-    topP: 0.95,
-    topK: 64,
-    maxOutputTokens: 8192,
-    responseMimeType: "text/plain",
-  };
+  // Create a TransformStream to handle the response
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        const result = await model.generateContentStream(question);
 
-  try {
-    const chatSession = model.startChat({
-      generationConfig,
-      history: [],
-    });
-
-    const result = await chatSession.sendMessage(question);
-
-    // Check for a valid response
-    if (result?.response?.text) {
-      return NextResponse.json(
-        { response: result.response.text() },
-        { status: 200 }
-      );
-    } else {
-      return NextResponse.json(
-        { message: "Failed to get a valid response from the AI" },
-        { status: 500 }
-      );
+        for await (const chunk of result.stream) {
+          const chunkText = chunk.text();
+          controller.enqueue(chunkText);
+        }
+        
+        controller.close();
+      } catch (error) {
+        controller.error(error);
+      }
     }
-  } catch (error) {
-    console.error("Error generating content:", error);
-    return NextResponse.json(
-      { message: "Error generating content" },
-      { status: 500 }
-    );
-  }
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain",
+      "Cache-Control": "no-cache",
+      "Connection": "keep-alive",
+    }
+  });
 }
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
