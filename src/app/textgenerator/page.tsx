@@ -100,6 +100,7 @@ export default function TextGenerator() {
           setQuestion={setQuestion}
           onSubmit={handleSubmit}
           loading={loading}
+          handleStop={handleStop}
         />
       </div>
     </div>

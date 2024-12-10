@@ -9,6 +9,7 @@ interface TextInputProps {
   setQuestion: (value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
   loading: boolean;
+  handleStop: () => void;
 }
 
 export default function TextInput({
@@ -16,6 +17,7 @@ export default function TextInput({
   setQuestion,
   onSubmit,
   loading,
+  handleStop,
 }: TextInputProps) {
   const isDisabled = question.trim() === "";
   return (
@@ -37,7 +39,13 @@ export default function TextInput({
             aria-label="Send message"
             disabled={isDisabled}
           >
-            {loading ? "Generating..." : <Send className="h-5 w-5" />}
+            {loading ? (
+              <button className="" onClick={handleStop}>
+                Stop
+              </button>
+            ) : (
+              <Send className="h-5 w-5" />
+            )}
           </Button>
         </div>
       </form>
