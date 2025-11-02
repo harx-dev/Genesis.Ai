@@ -43,9 +43,7 @@ const Hero = () => {
                 transition={{ duration: 0.35, delay: 0.35 }}
                 className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400"
               >
-                Generate text and images with our cutting-edge AI
-                technology(Scam). Boost your creativity and productivity if you
-                need to.
+                Generate text and images
               </motion.p>
             </div>
             <motion.div
